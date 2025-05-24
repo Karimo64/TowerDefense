@@ -9,6 +9,16 @@ public class Boss : MonoBehaviour
     public int vida = 100;
 
     public Animator Anim;
+
+     private void OnEnable()
+    {
+        objetivo = GameObject.Find("Objetivo");
+    }
+
+    private void OnDisable()
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +33,13 @@ public class Boss : MonoBehaviour
         
     }
 
-    private void OnCollisionEneter(Collision collision)
-    { 
+    private void OnCollisionEnter(Collision collision)
+    {
         if (collision.gameObject.CompareTag("Objetivo"))
         {
             Anim.SetBool("IsMoving", false);
             Anim.SetTrigger("OnObjectiveReached");
+            this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
