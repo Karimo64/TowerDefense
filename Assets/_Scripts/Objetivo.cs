@@ -5,17 +5,19 @@ using UnityEngine;
 public class Objetivo : MonoBehaviour
 {
     public int vida = 100;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    public delegate void ObjetivoDestruido();
+    public event ObjetivoDestruido EnObjetivoDestruido;
+
+    
     void Update()
     {
         if (vida <= 0)
         {
+            if (EnObjetivoDestruido != null)
+            {
+                EnObjetivoDestruido();
+            }
             Destroy(gameObject);
         }
     }
