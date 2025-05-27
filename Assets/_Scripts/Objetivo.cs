@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objetivo : MonoBehaviour
+public class Objetivo : MonoBehaviour, IAtacable
 {
     public int vida = 100;
 
@@ -22,7 +22,7 @@ public class Objetivo : MonoBehaviour
         }
     }
 
-    public void RecibirDanio(int dano = 20)
+    public void RecibirDano(int dano = 20)
     {
         vida -= dano;
         Debug.Log("Vida restante: " + vida);
