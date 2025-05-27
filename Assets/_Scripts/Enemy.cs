@@ -2,54 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Video;
 
-public class Enemy : MonoBehaviour
+public class Enemy : EnemigoBase
 {
-    public GameObject objetivo;
-    public int vida = 20;
-
-    public Animator Anim;
-
-    private void OnEnable()
+    private void Awake()
     {
-        objetivo = GameObject.Find("Objetivo");
+        vida = 50;
+        _dano = 10;
     }
 
-    private void OnDisable()
+    public override void OnDestroy()
     {
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        GetComponent<NavMeshAgent>().SetDestination(objetivo.transform.position);
-        Anim = GetComponent<Animator>(); 
-        Anim.SetBool("IsMoving", true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Objetivo"))
-        {
-            Anim.SetBool("IsMoving", false);
-            Anim.SetTrigger("OnObjectiveReached");
-            this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        }
-    }
-
-    public void Danar() 
-    { 
-        objetivo?.GetComponent<Objetivo>().RecibirDanio(5);
-    }
-
-    public void RecibirDano(int dano = 5)
-    {
-        vida -= dano;
+        base.OnDestroy();
+        referenciaAdminJuego.enemigosBaseDerrotados++;
     }
 }
